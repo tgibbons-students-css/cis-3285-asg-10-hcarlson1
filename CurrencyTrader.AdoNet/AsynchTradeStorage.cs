@@ -7,11 +7,21 @@ using System.Threading.Tasks;
 
 namespace CurrencyTrader.AdoNet
 {
-    class AsynchTradeStorage : ITradeStorage
+    public class AsynchTradeStorage : ITradeStorage
     {
+        AdoNetTradeStorage SynchTradeStorage;
+        private readonly ILogger logger;
+
+        public AsynchTradeStorage(ILogger logger) {
+
+            SynchTradeStorage = new AdoNetTradeStorage(logger);
+            this.logger = logger;
+
+        }
+        
         public void Persist(IEnumerable<TradeRecord> trades)
         {
-            throw new NotImplementedException();
+            Task.Run(() => SynchTradeStorage.Persist(trades));
         }
     }
 }

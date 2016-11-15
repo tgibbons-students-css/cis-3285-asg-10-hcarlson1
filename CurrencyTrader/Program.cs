@@ -20,7 +20,8 @@ namespace CurrencyTrader
             var tradeMapper = new SimpleTradeMapper();
             var tradeParser = new SimpleTradeParser(tradeValidator, tradeMapper);
 
-            var tradeStorage = new AdoNetTradeStorage(logger);
+            //var tradeStorage = new AdoNetTradeStorage(logger);
+            var tradeStorage = new AsynchTradeStorage(logger);
 
             var tradeProcessor = new TradeProcessor(tradeDataProvider, tradeParser, tradeStorage);
             tradeProcessor.ProcessTrades();
